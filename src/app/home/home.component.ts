@@ -9,11 +9,6 @@ import {PostService} from "../shared/post.service";
 })
 export class HomeComponent implements OnInit {
   posts: Array<PostModel> = [];
-  faArrowUp: any;
-  upvoteColor: any;
-  downvoteColor: any;
-  faArrowDown: any;
-  faComments: any;
 
   constructor(private postService: PostService) {
     this.postService.getAllPosts().subscribe(post => {
@@ -24,15 +19,4 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  upvotePost() {
-    
-  }
-
-  downvotePost() {
-    
-  }
-
-  goToPost(id: any) {
-    
-  }
 }
