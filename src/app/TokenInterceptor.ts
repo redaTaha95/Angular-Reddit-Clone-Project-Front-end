@@ -16,11 +16,13 @@ export class TokenInterceptor implements HttpInterceptor{
 
   intercept(req: HttpRequest<any>,
             next: HttpHandler): Observable<HttpEvent<any>>{
-    if (this.authService.getJwtToken()) {
-      this.addToken(req, this.authService.getJwtToken());
+    if (req.url.indexOf('refresh') !== -1 || req.url.indexOf('login') !== -1) {
+      return next.handle(req);
     }
 
-    return next.handle(req).pipe(catchError(error => {
+    const jwtToken = this.authService.getJwtToken();
+
+    return next.handle(this.addToken(req, jwtToken)).pipe(catchError(error => {
       if (error instanceof HttpErrorResponse
         && error.status === 403) {
         return this.handleAuthErrors(req, next);
@@ -30,7 +32,7 @@ export class TokenInterceptor implements HttpInterceptor{
     }));
   }
 
-  private handleAuthErrors(req: HttpRequest<any>, next: HttpHandler) {
+  private handleAuthErrors(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!this.isTokenRefreshing) {
       this.isTokenRefreshing = true;
       this.refreshTokenSubject.next(null);
