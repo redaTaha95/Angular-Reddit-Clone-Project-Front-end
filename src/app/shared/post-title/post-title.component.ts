@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import { faComments } from '@fortawesome/free-solid-svg-icons';
 import {PostModel} from "../post-model";
 import {PostService} from "../post.service";
@@ -7,11 +7,13 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-post-title',
   templateUrl: './post-title.component.html',
-  styleUrls: ['./post-title.component.css']
+  styleUrls: ['./post-title.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class PostTitleComponent implements OnInit {
-  @Input() posts: Array<PostModel> = [];
   faComments = faComments;
+  @Input()
+  posts!: PostModel[];
 
   constructor(private postService: PostService, private router:Router) {
     this.postService.getAllPosts().subscribe(post => {

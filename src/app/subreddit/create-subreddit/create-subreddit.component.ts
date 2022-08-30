@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {SubredditModel} from "../subreddit-response";
 import {Router} from "@angular/router";
 import {SubredditService} from "../subreddit-service.service";
@@ -10,15 +10,15 @@ import {SubredditService} from "../subreddit-service.service";
   styleUrls: ['./create-subreddit.component.css']
 })
 export class CreateSubredditComponent implements OnInit {
-  createSubredditForm: FormGroup;
+  createSubredditForm: UntypedFormGroup;
   subredditModel: SubredditModel;
-  title = new FormControl('');
-  description = new FormControl('');
+  title = new UntypedFormControl('');
+  description = new UntypedFormControl('');
 
   constructor(private router: Router, private subredditService: SubredditService) {
-    this.createSubredditForm = new FormGroup({
-      title: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required)
+    this.createSubredditForm = new UntypedFormGroup({
+      title: new UntypedFormControl('', Validators.required),
+      description: new UntypedFormControl('', Validators.required)
     });
     this.subredditModel = {
       name: '',

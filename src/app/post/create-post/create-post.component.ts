@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {CreatePostPayload} from "./create-post";
 import {SubredditModel} from "../../subreddit/subreddit-response";
 import {Router} from "@angular/router";
@@ -13,7 +13,7 @@ import {throwError} from "rxjs";
   styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent implements OnInit {
-  createPostForm: FormGroup = new FormGroup({});
+  createPostForm: UntypedFormGroup = new UntypedFormGroup({});
   postPayload: CreatePostPayload;
   subreddits: Array<SubredditModel> = [];
 
@@ -28,11 +28,11 @@ export class CreatePostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createPostForm = new FormGroup({
-      postName: new FormControl('', Validators.required),
-      subredditName: new FormControl('', Validators.required),
-      url: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required)
+    this.createPostForm = new UntypedFormGroup({
+      postName: new UntypedFormControl('', Validators.required),
+      subredditName: new UntypedFormControl('', Validators.required),
+      url: new UntypedFormControl('', Validators.required),
+      description: new UntypedFormControl('', Validators.required)
     });
 
     this.subredditService.getAllSubreddits().subscribe((data) => {

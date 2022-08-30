@@ -3,7 +3,7 @@ import {PostModel} from "../../shared/post-model";
 import {PostService} from "../../shared/post.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {throwError} from "rxjs";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {CommentPayload} from "../../comment/comment-payload";
 import {CommentService} from "../../comment/comment.service";
 
@@ -15,7 +15,7 @@ import {CommentService} from "../../comment/comment.service";
 export class ViewPostComponent implements OnInit {
   postId: number;
   post!: PostModel;
-  commentForm: FormGroup;
+  commentForm: UntypedFormGroup;
   commentPayload: CommentPayload;
   comments!: CommentPayload[];
 
@@ -23,8 +23,8 @@ export class ViewPostComponent implements OnInit {
               private commentService: CommentService, private router: Router) {
     this.postId = this.activateRoute.snapshot.params['id'];
 
-    this.commentForm = new FormGroup({
-      text: new FormControl('', Validators.required)
+    this.commentForm = new UntypedFormGroup({
+      text: new UntypedFormControl('', Validators.required)
     });
     this.commentPayload = {
       text: '',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {LoginRequestPayload} from "./login-request.payload";
 import {AuthService} from "../shared/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -11,7 +11,7 @@ import {ToastrService} from "ngx-toastr";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup = new FormGroup({});
+  loginForm: UntypedFormGroup = new UntypedFormGroup({});
   loginRequestPayload: LoginRequestPayload;
   registerSuccessMessage: string = '';
   isError: boolean = false;
@@ -29,9 +29,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loginForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)
+    this.loginForm = new UntypedFormGroup({
+      username: new UntypedFormControl('', Validators.required),
+      password: new UntypedFormControl('', Validators.required)
     });
 
     this.activateRoute.queryParams

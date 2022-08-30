@@ -24,6 +24,7 @@ import { CreatePostComponent } from './post/create-post/create-post.component';
 import { ListSubredditsComponent } from './subreddit/list-subreddits/list-subreddits.component';
 import {EditorModule} from "@tinymce/tinymce-angular";
 import { ViewPostComponent } from './post/view-post/view-post.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -44,12 +45,12 @@ import { ViewPostComponent } from './post/view-post/view-post.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AuthModule,
     NgxWebstorageModule.forRoot(),
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     FontAwesomeModule,
-    EditorModule
+    EditorModule,
+    NgbModule
   ],
   providers: [
     {
@@ -57,6 +58,10 @@ import { ViewPostComponent } from './post/view-post/view-post.component';
       useClass: TokenInterceptor,
       multi: true
     }
+  ],
+  exports: [
+    VoteButtonComponent,
+    PostTitleComponent
   ],
   bootstrap: [AppComponent]
 })
