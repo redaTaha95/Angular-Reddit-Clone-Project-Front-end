@@ -8,11 +8,13 @@ import {LoginResponse} from "../login/login-response.payload";
 import {map, tap} from "rxjs/operators";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 import {throwError} from "rxjs";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  baseUrl = environment.baseUrl;
   refreshTokenPayload = {
     refreshToken: this.getRefreshToken(),
     username: this.getUsername()
@@ -21,11 +23,11 @@ export class AuthService {
   constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
 
   signup(signupRequestPayload: SignupRequestPayload): Observable<any> {
-    return this.http.post('http://localhost:8080/api/auth/signup', signupRequestPayload, {responseType: 'text'});
+    return this.http.post(this.baseUrl + 'api/auth/signup', signupRequestPayload, {responseType: 'text'});
   }
 
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean> {
-    return this.http.post<LoginResponse>('http://localhost:8080/api/auth/login', loginRequestPayload)
+    return this.http.post<LoginResponse>(this.baseUrl + 'api/auth/login', loginRequestPayload)
       .pipe(map(data =>{
         this.localStorage.store('authenticationToken', data.authenticationToken);
         this.localStorage.store('username', data.username);
@@ -41,7 +43,7 @@ export class AuthService {
       username: this.getUsername()
     }
 
-    return this.http.post<LoginResponse>('http://localhost:8080/api/auth/refresh/token',
+    return this.http.post<LoginResponse>(this.baseUrl + 'api/auth/refresh/token',
       refreshTokenPayload)
       .pipe(tap(response => {
         this.localStorage.store('authenticationToken', response.authenticationToken);
@@ -70,7 +72,7 @@ export class AuthService {
   }
 
   logout() {
-    this.http.post('http://localhost:8080/api/auth/logout', this.refreshTokenPayload,
+    this.http.post(this.baseUrl + 'api/auth/logout', this.refreshTokenPayload,
       {responseType: 'text'})
       .subscribe(data => {
         console.log(data);
